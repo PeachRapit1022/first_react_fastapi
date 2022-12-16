@@ -4,7 +4,7 @@
 ## 使用技術
 - React
 - FastAPI
-− SQlite
+- SQlite
 
 ## できる予定のもの
 メモアプリ。いわゆるチュートリアル。
