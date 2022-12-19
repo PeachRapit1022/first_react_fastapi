@@ -70,12 +70,12 @@ def post_new_item(item: Item):
     data = sql_execute('SELECT * FROM memo')
     return data
 
-@app.put("/put")
-def back_test_put(item: Item):
+@app.put("/edit/{item_id}")
+def edit_item(item: Item):
     print(item)
     return item
 
-@app.delete("/get/{item_id}")
+@app.delete("/delete/{item_id}")
 def deltete_item(item_id: int):
 
     sql_execute('DELETE FROM memo WHERE id={}'.format(item_id))
