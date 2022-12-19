@@ -79,8 +79,6 @@ def edit_item(item: Item):
 def deltete_item(item_id: int):
 
     sql_execute('DELETE FROM memo WHERE id={}'.format(item_id))
-
-    print('delete',item_id)
             
 if __name__ == '__main__':
     uvicorn.run(app)

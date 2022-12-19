@@ -31,25 +31,6 @@ const MemoItem = (props) => {
 
     }
 
-    // モーダルの状態保持と状態変更
-    const [isModalOpen, setModal] = React.useState(false);
-    const handleClickModal = (isModalOpen) => {
-        setModal(!isModalOpen);
-        console.log(isModalOpen, props.id);
-    }
-
-    // モーダルの定義
-    let modal;
-    if (isModalOpen) {
-        modal = (
-            <form>
-                <input value={props.title}/>
-                <textarea value={props.body}/>
-                <button onClick={() => changePost(newItem)} >更新</button>
-            </form>
-        );
-    }
-
     // メモアイテムの定義
     let memoItem;
     if (isAlive) {
@@ -65,11 +46,35 @@ const MemoItem = (props) => {
     } else {
         memoItem = <tr>deleted</tr>
     }
-    
+
+    // モーダルの状態保持と状態変更
+    const [isModalOpen, setModal] = React.useState(false);
+    const handleClickModal = (isModalOpen) => {
+        setModal(!isModalOpen);
+        //setAlive(!isAlive);
+        console.log(isModalOpen, props.id);
+    }
+
+    // モーダルの定義
+    let modal;
+    if (isModalOpen) {
+        modal = (
+            <form>
+                <input value={props.title}/>
+                <br/>
+                <textarea value={props.body}/>
+                <br/>
+                <button onClick={() => handleClickModal(isModalOpen)}>戻る</button>
+                <button onClick={() => changePost(newItem)} >更新</button>
+            </form>
+        );
+    } else {
+        modal = memoItem
+    }
+
     // 出力
     return (
         <>
-            {memoItem}
             {modal}
         </>
     );
