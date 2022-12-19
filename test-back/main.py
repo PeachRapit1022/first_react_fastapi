@@ -50,18 +50,23 @@ def sql_execute(query):
 
 
 @app.get("/get")
-def back_test_get():
+def get_all_item():
     data = sql_execute('SELECT * FROM memo')
     return data
 
-@app.post("/post")
-def back_test_post(item: Item):
+@app.get("/get/{item_id}")
+def get_one_item(item_id: int):
+    data = sql_execute('SELECT * FROM memo WHERE id={}'.format(item_id))
+    return data
 
+@app.post("/post")
+def post_new_item(item: Item):
+    
     title = item.title
     body = item.body
-
+    
     sql_execute('INSERT INTO memo(title, body) values("{}","{}")'.format(title, body))
-
+    
     data = sql_execute('SELECT * FROM memo')
     return data
 
@@ -71,7 +76,7 @@ def back_test_put(item: Item):
     return item
 
 @app.delete("/get/{item_id}")
-def back_test_delete(item_id: int):
+def deltete_item(item_id: int):
 
     sql_execute('DELETE FROM memo WHERE id={}'.format(item_id))
 

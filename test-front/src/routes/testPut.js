@@ -13,11 +13,11 @@ function TestPut() {
     });
   }, []);
 
-  function updatePost() {
+  function updatePost(item_id) {
     axios
-      .put(`${baseURL}/put`, {
+      .put(`${baseURL}/put/${item_id}`, {
         userId:3,
-        id:3,
+        id:item_id,
         title: "Hello World!",
         body: "This is an updated post."
       })
@@ -33,7 +33,7 @@ function TestPut() {
         <h2>Putのページ</h2>
         <h3>{post.title}</h3>
         <p>{post.body}</p>
-        <button onClick={updatePost}>Update Post</button>
+        <button onClick={updatePost(post.id)}>Update Post</button>
     </div>
   );
 }
