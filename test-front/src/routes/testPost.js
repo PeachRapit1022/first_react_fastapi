@@ -18,10 +18,11 @@ function TestPost() {
         userId:2,
         id:2,
         title: "Hello World!",
-        body: "aiueo"
+        body: "aiueo2"
       })
       .then((response) => {
-        setPost(response.data);
+        setPost(response.data.slice(-1)[0]);
+        console.log(response.data.slice(-1)[0]);
       });
   }
 

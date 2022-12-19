@@ -7,6 +7,7 @@ import TestGet from './routes/testGet';
 import TestPost from './routes/testPost';
 import TestPut from './routes/testPut';
 import TestDelete from './routes/testDelete';
+import TestList from './routes/testList';
 
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
                     <Link to={"/get"}>testGet</Link>
                 </li>
                 <li>
+                    <Link to={"/list"}>testList</Link>
+                </li>
+                <li>
                     <Link to={"/post"}>testPost</Link>
                 </li>
                 <li>
@@ -34,6 +38,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/get" element={<TestGet />} />
+                <Route path="/list" element={<TestList />} />
                 <Route path="/post" element={<TestPost />} />
                 <Route path="/put" element={<TestPut />} />
                 <Route path="/delete" element={<TestDelete />} />

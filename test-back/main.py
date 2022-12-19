@@ -21,32 +21,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def Hello():
-    return {"Hello":"World!"}
-
-@app.get("/get")
-def back_test_get():
-
-    return {
-        "userId": 1,
-        "id": 1,
-        "title": "タイトル",
-        "body": "ポケモン、ゲットだぜ！"
-    }
-
-@app.delete("/get")
-def back_test_delete():
-    print('delete')
-    
-
-
-
 class Item(BaseModel):
     userId: int = None
     id: int
     title: str
     body: str
+
+# dict_factoryの定義
+def dict_factory(cursor, row):
+   d = {}
+   for idx, col in enumerate(cursor.description):
+       d[col[0]] = row[idx]
+   return d
+
+def sql_execute(query):
+    conn = sqlite3.connect(dbname)
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+
+    cur.execute(query)
+
+    data = cur.fetchall()
+
+    conn.commit()
+    conn.close()
+
+    return data
+
+
+@app.get("/get")
+def back_test_get():
+    data = sql_execute('SELECT * FROM memo')
+    return data
 
 @app.post("/post")
 def back_test_post(item: Item):
@@ -54,23 +60,22 @@ def back_test_post(item: Item):
     title = item.title
     body = item.body
 
-    conn = sqlite3.connect(dbname)
-    cur = conn.cursor()
+    sql_execute('INSERT INTO memo(title, body) values("{}","{}")'.format(title, body))
 
-    cur.execute('INSERT INTO memo(title, body) values("{}","{}")'.format(title, body))
-
-    cur.execute('SELECT * FROM memo')
-    print(cur.fetchall())
-
-    conn.commit()
-    conn.close()
-
-    return item
+    data = sql_execute('SELECT * FROM memo')
+    return data
 
 @app.put("/put")
 def back_test_put(item: Item):
     print(item)
     return item
+
+@app.delete("/get/{item_id}")
+def back_test_delete(item_id: int):
+
+    sql_execute('DELETE FROM memo WHERE id={}'.format(item_id))
+
+    print('delete',item_id)
             
 if __name__ == '__main__':
     uvicorn.run(app)
