@@ -3,8 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from pydantic import BaseModel
 from typing import Union
+import sqlite3
 
 app = FastAPI()
+
+dbname = 'Test.db'
 
 origins = [
     "http://localhost:3000",
@@ -47,7 +50,21 @@ class Item(BaseModel):
 
 @app.post("/post")
 def back_test_post(item: Item):
-    print(item)
+
+    title = item.title
+    body = item.body
+
+    conn = sqlite3.connect(dbname)
+    cur = conn.cursor()
+
+    cur.execute('INSERT INTO memo(title, body) values("{}","{}")'.format(title, body))
+
+    cur.execute('SELECT * FROM memo')
+    print(cur.fetchall())
+
+    conn.commit()
+    conn.close()
+
     return item
 
 @app.put("/put")

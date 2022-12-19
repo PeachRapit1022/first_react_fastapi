@@ -18,7 +18,7 @@ function TestGet() {
 
   return (
     <div>
-        <h2>Getのページ</h2>
+        <h2>Getのページ - memo一覧</h2>
         <h3>{post.title}</h3>
         <p>{post.body}</p>
     </div>
