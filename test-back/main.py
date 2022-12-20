@@ -29,10 +29,10 @@ class Item(BaseModel):
 
 # dict_factoryの定義
 def dict_factory(cursor, row):
-   d = {}
-   for idx, col in enumerate(cursor.description):
-       d[col[0]] = row[idx]
-   return d
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
 
 def sql_execute(query):
     conn = sqlite3.connect(dbname)
@@ -72,7 +72,13 @@ def post_new_item(item: Item):
 
 @app.put("/edit/{item_id}")
 def edit_item(item: Item):
-    print(item)
+
+    id = item.id
+    title = item.title
+    body = item.body
+
+    sql_execute('UPDATE memo SET title="{}", body="{}" WHERE id={}'.format(title, body, id))
+
     return item
 
 @app.delete("/delete/{item_id}")
