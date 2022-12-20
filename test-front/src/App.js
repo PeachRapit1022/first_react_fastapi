@@ -1,5 +1,4 @@
 import React from "react";
-//import axios from "axios";
 import { Routes, Route, Link } from 'react-router-dom';
 
 import Home from './routes/home';
@@ -17,10 +16,10 @@ const App = () => {
                     <Link to={"/"}>Home</Link>
                 </li>
                 <li>
-                    <Link to={"/list"}>testList</Link>
+                    <Link to={"/list"}>List</Link>
                 </li>
                 <li>
-                    <Link to={"/post"}>testPost</Link>
+                    <Link to={"/post"}>Post</Link>
                 </li>
             </ul>
             <Routes>
