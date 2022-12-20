@@ -13,7 +13,7 @@ const PostNewItem = () => {
         }
     );
 
-    // タイトル書き換え
+    // タイトル書き換え 
     const handleTitleChange = (event) => {
         const inputValue = event.target.value;
         setState((prevState) => ({ ...prevState, title: inputValue }));
