@@ -7,8 +7,6 @@ import sqlite3
 
 app = FastAPI()
 
-dbname = 'Test.db'
-
 origins = [
     "http://localhost:3000",
 ]
@@ -21,11 +19,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Item(BaseModel):
-    userId: int = None
-    id: int
-    title: str
-    body: str
+# DB名
+dbname = 'Test.db'
 
 # dict_factoryの定義
 def dict_factory(cursor, row):
@@ -34,6 +29,7 @@ def dict_factory(cursor, row):
         d[col[0]] = row[idx]
     return d
 
+# SQL実行関数
 def sql_execute(query):
     conn = sqlite3.connect(dbname)
     conn.row_factory = dict_factory
@@ -48,17 +44,24 @@ def sql_execute(query):
 
     return data
 
+# Item 型定義
+class Item(BaseModel):
+    title: str
+    body: str
 
+# GET(一覧)
 @app.get("/get")
 def get_all_item():
     data = sql_execute('SELECT * FROM memo')
     return data
 
+# GET(個別)
 @app.get("/get/{item_id}")
 def get_one_item(item_id: int):
     data = sql_execute('SELECT * FROM memo WHERE id={}'.format(item_id))
     return data
 
+# 新規投稿
 @app.post("/post")
 def post_new_item(item: Item):
     
@@ -70,21 +73,22 @@ def post_new_item(item: Item):
     data = sql_execute('SELECT * FROM memo')
     return data
 
+# 編集
 @app.put("/edit/{item_id}")
-def edit_item(item: Item):
+def edit_item(item_id: int, item: Item):
 
-    id = item.id
     title = item.title
     body = item.body
 
-    sql_execute('UPDATE memo SET title="{}", body="{}" WHERE id={}'.format(title, body, id))
+    sql_execute('UPDATE memo SET title="{}", body="{}" WHERE id={}'.format(title, body, item_id))
 
     return item
 
+# 削除
 @app.delete("/delete/{item_id}")
 def deltete_item(item_id: int):
-
     sql_execute('DELETE FROM memo WHERE id={}'.format(item_id))
             
+# サーバー起動コマンド
 if __name__ == '__main__':
     uvicorn.run(app)

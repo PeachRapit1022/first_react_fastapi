@@ -28,8 +28,6 @@ const MemoItem = (props) => {
     // アイテムの更新
     const handleSubmit = () => {
         axios.put(`${baseURL}/edit/${props.id}`,{
-            userId:1,
-            id: props.id,
             title: state.title,
             body: state.body
         })
