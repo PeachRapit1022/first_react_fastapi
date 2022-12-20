@@ -6,6 +6,7 @@ import Home from './routes/home';
 import TestPost from './routes/testPost';
 import TestPut from './routes/testPut';
 import TestList from './routes/testList';
+import PostNewItem from "./routes/postNewItem";
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/list" element={<TestList />} />
-                <Route path="/post" element={<TestPost />} />
+                <Route path="/post" element={<PostNewItem />} />
                 <Route path="/put" element={<TestPut />} />
             </Routes>
         </div>
