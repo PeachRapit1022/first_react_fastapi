@@ -3,13 +3,11 @@ import React from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 
 import Home from './routes/home';
-import TestPost from './routes/testPost';
-import TestPut from './routes/testPut';
-import TestList from './routes/testList';
+import List from './routes/list';
 import PostNewItem from "./routes/postNewItem";
 
 
-function App() {
+const App = () => {
 
     return (
         <div>
@@ -24,18 +22,14 @@ function App() {
                 <li>
                     <Link to={"/post"}>testPost</Link>
                 </li>
-                <li>
-                    <Link to={"/put"}>testPut</Link>
-                </li>
             </ul>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/list" element={<TestList />} />
+                <Route path="/list" element={<List />} />
                 <Route path="/post" element={<PostNewItem />} />
-                <Route path="/put" element={<TestPut />} />
             </Routes>
         </div>
     );
-}
+};
 
 export default App;

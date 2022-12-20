@@ -1,25 +1,17 @@
 import axios from "axios";
 import React from "react";
-import Lesson from './memoItem';
-import MemoItem from "./memoItem2";
+import MemoItem from "./item";
 
-//const baseURL = "https://jsonplaceholder.typicode.com/posts/1";
 const baseURL = "http://localhost:8000/get"
 
-
-
-function TestList() {
+const List = () => {
   const [post, setPost] = React.useState(null);
 
   React.useEffect(() => {
     axios.get(baseURL).then((response) => {
-      console.log(response.data)
       setPost(response.data);
     });
   }, []);
-
-
-
 
   if (!post) return null;
 
@@ -39,8 +31,7 @@ function TestList() {
               );
          })}
         </div>
-        
   );
-}
+};
 
-export default TestList;
+export default List;

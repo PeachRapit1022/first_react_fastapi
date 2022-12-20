@@ -1,16 +1,29 @@
 import React from "react";
 import axios from "axios";
 
-const baseURL = "http://localhost:8000"
+const baseURL = "http://localhost:8000";
 
 const MemoItem = (props) => {
 
+    // 編集時入力内容の保持
     const [state, setState] = React.useState(
         {
             title: props.title,
             body: props.body
         }
     );
+
+    // タイトル書き換え
+    const handleTitleChange = (event) => {
+        const inputValue = event.target.value;
+        setState((prevState) => ({ ...prevState, title: inputValue }));
+    };
+
+    // 本文書き換え
+    const handleBodyChange = (event) => {
+        const inputValue = event.target.value;
+        setState((prevState) => ({ ...prevState, body: inputValue }));
+    };
 
     // アイテムの更新
     const handleSubmit = () => {
@@ -20,39 +33,22 @@ const MemoItem = (props) => {
             title: state.title,
             body: state.body
         })
-        .then((response) => {console.log(response.data)})
-    }
-
+        .then((response) => {console.log(response.data)});
+    };
 
     // アイテムの削除
     const [isAlive, setAlive] = React.useState(true);
     const deletePost = (id) => {
         setAlive(false);
         axios.delete(`${baseURL}/delete/${id}`);
-    }
+    };
 
     // モーダルの状態保持と状態変更
     const [isModalOpen, setModal] = React.useState(false);
     const handleClickModal = (isModalOpen) => {
         setModal(!isModalOpen);
-        console.log(isModalOpen, props.id);
     };
 
-    // タイトル書き換え
-    const handleTitleChange = (event) => {
-        console.log(state)
-        const inputValue = event.target.value;
-        setState((prevState) => ({ ...prevState, title: inputValue }));
-    };
-
-    // 本文書き換え
-    const handleBodyChange = (event) => {
-        console.log(state)
-        const inputValue = event.target.value;
-        setState((prevState) => ({ ...prevState, body: inputValue }));
-    };
-
-    // <button onClick={() => getNewItem()} >更新</button>
     // 表示内容の切り替え 出力
     if (isModalOpen) {
         return (
@@ -83,7 +79,7 @@ const MemoItem = (props) => {
         );
     } else {
         return <div>deleted</div>
-    }
+    };
 };
 
 export default MemoItem;

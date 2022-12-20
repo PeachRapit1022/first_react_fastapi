@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
 
-const baseURL = "http://localhost:8000"
+const baseURL = "http://localhost:8000";
 
 const PostNewItem = () => {
+
+    // 入力内容保持
     const [state, setState] = React.useState(
         {
             title: '',
@@ -13,14 +15,12 @@ const PostNewItem = () => {
 
     // タイトル書き換え
     const handleTitleChange = (event) => {
-        console.log(state)
         const inputValue = event.target.value;
         setState((prevState) => ({ ...prevState, title: inputValue }));
     };
 
     // 本文書き換え
     const handleBodyChange = (event) => {
-        console.log(state)
         const inputValue = event.target.value;
         setState((prevState) => ({ ...prevState, body: inputValue }));
     };
@@ -32,26 +32,27 @@ const PostNewItem = () => {
             id: 0,
             title: state.title,
             body: state.body
-        })
+        });
     };
 
     return (
-        <form onSubmit={() => handleSubmit()}>
-            <input 
-                value={state.title}
-                onChange={(event) => {handleTitleChange(event)}}
-            />
-            <br/>
-            <textarea
-                value={state.body}
-                onChange={(event) => {handleBodyChange(event)}}
-            />
-            <br/>
-            <input type='submit' value='投稿'/>
-        </form>
+        <>
+            <h2>新規投稿</h2>
+            <form onSubmit={() => handleSubmit()}>
+                <input 
+                    value={state.title}
+                    onChange={(event) => {handleTitleChange(event)}}
+                />
+                <br/>
+                <textarea
+                    value={state.body}
+                    onChange={(event) => {handleBodyChange(event)}}
+                />
+                <br/>
+                <input type='submit' value='投稿'/>
+            </form>
+        </>
     );
-
-
-}
+};
 
 export default PostNewItem;
